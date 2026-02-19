@@ -6,7 +6,7 @@ from app.schemas import User,CreateUser
 from app.database import engine,SessionLocal
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
-from app.routers import post,user,auth,vote
+from app.routers import user,auth
 from fastapi.middleware.cors import CORSMiddleware
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
