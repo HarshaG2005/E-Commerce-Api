@@ -37,43 +37,30 @@ async def create_user(request: Request,
                 db.commit()
                 db.refresh(new_user)
                 return new_user
-            except HTTPException:
-                 raise
+            
             except IntegrityError:
                     db.rollback()
                     raise HTTPException(
                            status_code=status.HTTP_400_BAD_REQUEST,
                            detail="User with that email already exists."
                                      )
-            except Exception as e:
-                
-                raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Unexpected error: {str(e)}")
-            except SQLAlchemyError as e:
-               db.rollback()
-               raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f'Database error: {str(e)}')
+           
 #######################SELECT_USER_ACCOUNT############################
 @router.get("/{id}",response_model=User)
 
 async def select_user(id:int,db:Session=Depends(get_db))->User:
-  """ Retrieve a user account by its ID.
-  Args:
-      id: User ID
-      db: Database session
-  Returns:
-          The user account associated with the given ID
-  """
-  try:
-     post=(
-      db.query(app.models.User)
-      .filter(app.models.User.id==id)
-      .first())
-     if post==None:
-      raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f"Cant find user related to id:{id}")
-     return post
-  except HTTPException as e:
-    raise
- 
-  except SQLAlchemyError as e:
-     raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f'Database error: {str(e)}')
-  except Exception as e:
-    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail=str(e))
+      """ Retrieve a user account by its ID.
+      Args:
+          id: User ID
+          db: Database session
+      Returns:
+              The user account associated with the given ID
+      """
+  
+      user=(
+        db.query(app.models.User)
+        .filter(app.models.User.id==id)
+        .first())
+      if user==None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f"Cant find user related to id:{id}")
+      return user
