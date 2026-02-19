@@ -3,7 +3,7 @@ import time
 import app.models 
 import app.utils
 from app.schemas import User,CreateUser
-from app.databases import engine,SessionLocal
+from app.database import engine,SessionLocal
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from app.routers import post,user,auth,vote
