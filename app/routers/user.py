@@ -15,7 +15,7 @@ limiter = Limiter(key_func=get_remote_address)
 
 ###################################CREATING_USER####################
 @router.post("/",status_code=status.HTTP_201_CREATED,response_model=User)
-@limiter.limit("3/hour")
+@limiter.limit("10/hour")
 async def create_user(request: Request,
                 user:CreateUser,
                 db:Session=Depends(get_db))->User:

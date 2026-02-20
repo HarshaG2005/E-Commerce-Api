@@ -6,7 +6,7 @@ from app.schemas import User,CreateUser
 from app.database import engine,SessionLocal
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
-from app.routers import user,auth
+from app.routers import user,auth,product
 from fastapi.middleware.cors import CORSMiddleware
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
@@ -21,6 +21,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 # INCLUDE ROUTERS
 app.include_router(auth.router)
 app.include_router(user.router)
+app.include_router(product.router)
 origins = ['*']
     
 # ADD CORS MIDDLEWARE
